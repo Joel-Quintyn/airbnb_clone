@@ -6,7 +6,7 @@ from . import models
 
 
 @admin.register(models.User)
-class CustomUserAdmin(UserAdmin):
+class UserAdmin(UserAdmin):
 
     """
     Custom User Admin Display/View
