@@ -7,7 +7,15 @@ class ItemAdmin(admin.ModelAdmin):
 
     """Item Admin Definition"""
 
-    pass
+    list_display = (
+        "name",
+        "room_count",
+    )
+
+    def room_count(self, obj):
+        return obj.rooms.count()
+
+    room_count.short_description = "No. of Rooms"
 
 
 @admin.register(models.Room)
@@ -68,6 +76,7 @@ class RoomAdmin(admin.ModelAdmin):
         "instant_book",
         "room_type",
         # "count_amenities",
+        "count_photos",
     )
 
     list_filter = (
@@ -92,10 +101,14 @@ class RoomAdmin(admin.ModelAdmin):
     readonly_fields = ("created", "updated")
 
     # def count_amenities(self, obj):
-    #     amount = obj.amenities.count()
-    #     return amount
+    #     return obj.amenities.count()
 
     # count_amenities.short_description = "Amenities"
+
+    def count_photos(self, obj):
+        return obj.photos.count()
+
+    count_photos.short_description = "Photos"
 
 
 @admin.register(models.Photo)
