@@ -109,6 +109,12 @@ class Room(core_models.TimeStampedModel):
         return self.name
 
     def total_rating(self):
+
+        """
+        Method that calculates the overall average reviews of a room.
+        returns the average rounded to two decimal places
+        """
+
         all_reviews = self.reviews.all()
         total_rating = 0
         for review in all_reviews:

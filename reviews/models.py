@@ -23,6 +23,12 @@ class Review(core_models.TimeStampedModel):
         return f"{self.review} - {self.room.name}"
 
     def rating_average(self):
+
+        """
+        Method to calculate and return the average rating of a review
+        returns the average rounded to two decimal places
+        """
+        
         avg = (
             self.cleanliness_rating
             + self.accuracy_rating
