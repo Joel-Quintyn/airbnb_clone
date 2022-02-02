@@ -8,4 +8,6 @@ class ListAdmin(admin.ModelAdmin):
 
     """List Admin Definition"""
 
-    pass
+    list_display = ("name", "user", "total_stays")
+
+    search_fields = ("name",)

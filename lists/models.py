@@ -14,3 +14,9 @@ class List(core_models.TimeStampedModel):
 
     def __str__(self):
         return self.name
+
+    def total_stays(self):
+        """Returns the total rooms/stays in a list"""
+        return self.rooms.count()
+
+    total_stays.short_description = "Stays"
