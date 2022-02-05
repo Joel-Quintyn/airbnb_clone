@@ -1,7 +1,6 @@
 import random
 from django.core.management.base import BaseCommand
 from django.contrib.admin.utils import flatten
-from django.http import QueryDict
 from django_seed import Seed
 import rooms.models as room_models
 import users.models as user_models
