@@ -43,7 +43,7 @@ class Reservation(core_models.TimeStampedModel):
         """
 
         now = timezone.now().date()
-        return now > self.check_in and now < self.check_out
+        return now >= self.check_in and now <= self.check_out
 
     # To change the list display of in_progress view to a boolean icon/view i.e a tick or x
     in_progress.boolean = True
@@ -57,6 +57,6 @@ class Reservation(core_models.TimeStampedModel):
 
         now = timezone.now().date()
         return now > self.check_out
-    
+
     # To change the list display of is_finished view to a boolean icon/view i.e a tick or x
     is_finished.boolean = True
