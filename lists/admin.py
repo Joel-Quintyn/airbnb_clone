@@ -8,7 +8,12 @@ class ListAdmin(admin.ModelAdmin):
 
     """List Admin Definition"""
 
-    list_display = ("name", "user", "total_stays")
+    list_display = (
+        # "id",
+        "name",
+        "user",
+        "total_stays",
+    )
 
     search_fields = ("name",)
 

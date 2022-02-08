@@ -69,6 +69,7 @@ class RoomAdmin(admin.ModelAdmin):
     # ordering = ("name", "price", "bedrooms")
 
     list_display = (
+        # "id",
         "name",
         "host",
         "country",
