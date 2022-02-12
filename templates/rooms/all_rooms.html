@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block page_title %}All Rooms{% endblock page_title %}
+{% block content %}
+  {% for room in rooms %}
+    <li>{{room.name}} - ${{room.price}}</li>
+  {% endfor %}
+{% endblock content %}
