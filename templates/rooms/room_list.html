@@ -3,7 +3,11 @@
 {% block content %}
 
 {% for room in rooms %}
-<li>{{room.name}} - ${{room.price}}</li>
+<li>
+  <a href="{% url 'rooms:detail' room.id %}">
+    {{room.name}} - ${{room.price}}
+  </a>
+</li>
 {% endfor %}
 
 <h5>
