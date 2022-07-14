@@ -14,13 +14,16 @@
         {% endif %}
     </h2>
 
+    {% if room.amenities.all %}
     <h3>Amenities</h3>
     <ul>
         {% for a in room.amenities.all %}
         <li>{{a.name}}</li>
         {% endfor %}
     </ul>
+    {% endif %}
 
+    
     {% if room.facilities.all %}
     <h3>Facilities</h3>
     <ul>
