@@ -38,27 +38,27 @@
 
     <div>
         <label for="price">Price</label>
-        <input value="{{price}}" type="number" name="price" id="price" placeholder="Price" min=20>
+        <input value="{{price}}" type="number" name="price" id="price" placeholder="Price" min=0>
     </div>
 
     <div>
         <label for="guests">Guests</label>
-        <input value="{{guests}}" type="number" name="guests" id="guests" placeholder="Guests" min=1>
+        <input value="{{guests}}" type="number" name="guests" id="guests" placeholder="Guests" min=0>
     </div>
 
     <div>
         <label for="beds">Beds</label>
-        <input value="{{beds}}" type="number" name="beds" id="beds" placeholder="Beds" min=1>
+        <input value="{{beds}}" type="number" name="beds" id="beds" placeholder="Beds" min=0>
     </div>
 
     <div>
         <label for="bedrooms">Bedrooms</label>
-        <input value="{{bedrooms}}" type="number" name="bedrooms" id="bedrooms" placeholder="Bedrooms" min=1>
+        <input value="{{bedrooms}}" type="number" name="bedrooms" id="bedrooms" placeholder="Bedrooms" min=0>
     </div>
 
     <div>
         <label for="baths">Baths</label>
-        <input value="{{baths}}" type="number" name="baths" id="baths" placeholder="Baths" min=1>
+        <input value="{{baths}}" type="number" name="baths" id="baths" placeholder="Baths" min=0>
     </div>
 
     <div>
@@ -112,5 +112,11 @@
     <button>Search</button>
 
 </form>
+
+<h2>Results</h2>
+
+{% for room in rooms %}
+<h3>{{room.name}}</h3>
+{% endfor %}
 
 {% endblock content %}
