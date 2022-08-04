@@ -17,4 +17,4 @@ class LoginForm(forms.Form):
             else:
                 self.add_error("password", forms.ValidationError("Check password"))
         except models.User.DoesNotExist:
-            self.add_error(forms.ValidationError("User does not exist"))
+            self.add_error("email", forms.ValidationError("User does not exist"))
