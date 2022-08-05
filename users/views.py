@@ -1,4 +1,3 @@
-from django.views import View
 from django.views.generic import FormView
 from django.shortcuts import render, redirect
 from django.urls import reverse, reverse_lazy
@@ -21,21 +20,6 @@ class LoginView(FormView):
             login(self.request, user)
             return redirect(reverse("core:home"))
         return super().form_valid(form)
-
-    """ def get(self, request):
-        form = forms.LoginForm(initial={"email": "evan-cole@mail.com"})
-        return render(request, "users/login.html", {"form": form})
-
-    def post(self, request):
-        form = forms.LoginForm(request.POST)
-        if form.is_valid():
-            email = form.cleaned_data.get("email")
-            password = form.cleaned_data.get("password")
-            user = authenticate(request, username=email, password=password)
-            if user is not None:
-                login(request, user)
-                return redirect(reverse("core:home"))
-        return render(request, "users/login.html", {"form": form}) """
 
 
 def log_out(request):
