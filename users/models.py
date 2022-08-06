@@ -1,3 +1,4 @@
+from xmlrpc.client import Boolean
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
@@ -45,3 +46,8 @@ class User(AbstractUser):
         choices=CURRENCY_CHOICES, max_length=3, blank=True, default=CURRENCY_USD
     )
     superhost = models.BooleanField(default=False)
+    email_confirmed = models.BooleanField(default=False)
+    email_secret = models.CharField(max_length=120, default="", blank=True)
+
+    def verify_email(self):
+        pass
