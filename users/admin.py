@@ -37,6 +37,8 @@ class UserAdmin(UserAdmin):
         "first_name",
         "last_name",
         "email",
+        "email_verified",
+        # "email_secret",
         "is_active",
         "language",
         "currency",
