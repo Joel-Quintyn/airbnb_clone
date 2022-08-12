@@ -168,3 +168,6 @@ Thumbs.db
 
 # Custom Project Folders
 uploads/
+
+# Custom files
+client_secret.json

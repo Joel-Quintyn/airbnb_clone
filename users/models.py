@@ -1,6 +1,6 @@
 import uuid
 from django.conf import settings
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, AbstractBaseUser, PermissionsMixin
 from django.db import models
 from django.core.mail import send_mail
 from django.utils.html import strip_tags
@@ -39,6 +39,14 @@ class User(AbstractUser):
         (CURRENCY_GYD, "GYD"),
     )
 
+    LOGIN_EMAIL = "email"
+    LOGIN_GITHUB = "google"
+
+    LOGIN_CHOICES = (
+        (LOGIN_EMAIL, "Email"),
+        (LOGIN_GITHUB, "Github"),
+    )
+
     avatar = models.ImageField(upload_to="avatars", blank=True)
     gender = models.CharField(choices=GENDER_CHOICES, max_length=10, blank=True)
     bio = models.TextField(default="", blank=True)
@@ -52,6 +60,9 @@ class User(AbstractUser):
     superhost = models.BooleanField(default=False)
     email_verified = models.BooleanField(default=False)
     email_secret = models.CharField(max_length=20, default="", blank=True)
+    login_method = models.CharField(
+        choices=LOGIN_CHOICES, max_length=10, default=LOGIN_EMAIL
+    )
 
     def verify_email(self):
         if self.email_verified is False:
