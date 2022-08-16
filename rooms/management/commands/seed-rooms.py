@@ -32,10 +32,10 @@ class Command(BaseCommand):
                 "name": lambda x: seeder.faker.sentence(nb_words=4),
                 "host": lambda x: random.choice(users),
                 "room_type": lambda x: random.choice(room_types),
-                "price": lambda x: random.randint(30, 300),
+                "price": lambda x: random.randint(30, 2000),
                 "guests": lambda x: random.randint(1, 15),
-                "beds": lambda x: random.randint(1, 10),
-                "bedrooms": lambda x: random.randint(1, 5),
+                "beds": lambda x: random.randint(1, 6),
+                "bedrooms": lambda x: random.randint(1, 6),
                 "baths": lambda x: random.randint(1, 5),
             },
         )
@@ -46,7 +46,7 @@ class Command(BaseCommand):
             room = room_models.Room.objects.get(pk=room)
             for i in range(3, random.randint(10, 15)):
                 room_models.Photo.objects.create(
-                    caption=seeder.faker.sentence(nb_words=5),
+                    caption=seeder.faker.sentence(nb_words=3),
                     room=room,
                     file=f"/room_photos/{random.randint(1, 31)}.webp",
                 )

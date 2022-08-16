@@ -56,7 +56,7 @@ class RoomAdmin(admin.ModelAdmin):
         (
             "What this place offers",
             {
-                "classes": ("collapse",),
+                # "classes": ("collapse",),
                 "fields": ("amenities", "facilities", "house_rules"),
             },
         ),
@@ -84,6 +84,7 @@ class RoomAdmin(admin.ModelAdmin):
         "instant_book",
         "room_type",
         # "count_amenities",
+        # "count_facilities",
         "count_photos",
         "total_rating",
     )
@@ -115,6 +116,11 @@ class RoomAdmin(admin.ModelAdmin):
     #     return obj.amenities.count()
 
     # count_amenities.short_description = "Amenities"
+    
+    # def count_facilities(self, obj):
+    #     return obj.facilities.count()
+
+    # count_facilities.short_description = "Facilities"
 
     def count_photos(self, obj):
         return obj.photos.count()
