@@ -27,7 +27,7 @@ class LoginView(FormView):
 
 def log_out(request):
     logout(request)
-    return redirect(reverse("core:home"))
+    return redirect(reverse("users:login"))
 
 
 class SignUpView(FormView):

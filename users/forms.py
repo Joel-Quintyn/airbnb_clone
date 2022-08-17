@@ -17,9 +17,9 @@ class LoginForm(forms.Form):
             if user.check_password(password):
                 return self.cleaned_data
             else:
-                self.add_error("password", forms.ValidationError("Check password"))
+                self.add_error("password", forms.ValidationError("Check Password"))
         except models.User.DoesNotExist:
-            self.add_error("email", forms.ValidationError("User does not exist"))
+            self.add_error("email", forms.ValidationError("User Does Not Exist"))
 
 
 class SignUpForm(forms.ModelForm):
@@ -38,6 +38,16 @@ class SignUpForm(forms.ModelForm):
     confirm_password = forms.CharField(
         widget=forms.PasswordInput(attrs={"placeholder": "Confirm Password"})
     )
+
+    def clean_email(self):
+        email = self.cleaned_data.get("email")
+        try:
+            models.User.objects.get(email=email)
+            raise forms.ValidationError(
+                "This Email Is Already Taken", code="existing_user"
+            )
+        except models.User.DoesNotExist:
+            return email
 
     def clean_confirm_password(self):
         password = self.cleaned_data.get("password")
