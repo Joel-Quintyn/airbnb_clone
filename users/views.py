@@ -6,6 +6,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse, reverse_lazy
 from django.contrib.auth import authenticate, login, logout
 from django.core.files.base import ContentFile
+from django.contrib import messages
 from . import forms, models
 
 
@@ -21,11 +22,13 @@ class LoginView(FormView):
         user = authenticate(self.request, username=email, password=password)
         if user is not None:
             login(self.request, user)
+            messages.success(self.request, f"Welcome back {user.first_name}")
             return redirect(reverse("core:home"))
         return super().form_valid(form)
 
 
 def log_out(request):
+    messages.success(request, "See you later")
     logout(request)
     return redirect(reverse("users:login"))
 
@@ -43,6 +46,7 @@ class SignUpView(FormView):
         user = authenticate(self.request, username=email, password=password)
         if user is not None:
             login(self.request, user)
+            messages.success(self.request, f"Welcome to Djangobnb, {user.first_name}")
         user.verify_email()
         return super().form_valid(form)
 
@@ -53,9 +57,9 @@ def email_verification(request, key):
         user.email_verified = True
         user.email_secret = ""
         user.save()
-        #  TODO: Add success message to site
+        messages.success(request, "Email Verified")
     except models.User.DoesNotExist:
-        # TODO: Add error message to site
+        messages.error(request, "User does not exist")
         pass
     return redirect(reverse("core:home"))
 
@@ -85,7 +89,7 @@ def github_callback(request):
             token_json = token_request.json()
             error = token_json.get("error", None)
             if error is not None:
-                raise GithubException("Can't get access token")
+                raise GithubException("Can't get access")
             else:
                 access_token = token_json.get("access_token")
                 profile_request = requests.get(
@@ -106,7 +110,7 @@ def github_callback(request):
                         user = models.User.objects.get(email=email)
                         if user.login_method != models.User.LOGIN_GITHUB:
                             raise GithubException(
-                                f"Please log in with: {user.login_method}"
+                                f"Please log in with {user.login_method}"
                             )
                     except models.User.DoesNotExist:
                         user = models.User.objects.create(
@@ -127,12 +131,12 @@ def github_callback(request):
                                 ContentFile(photo_request.content),
                             )
                     login(request, user)
-                    # messages.success(request, f"Welcome back {user.first_name}")
+                    messages.success(request, f"Welcome back {user.first_name}")
                     return redirect(reverse("core:home"))
                 else:
-                    raise GithubException("Your email is private")
+                    raise GithubException("Can't get your info")
         else:
-            raise GithubException("Can't get code")
-    except GithubException:
-        # messages.error(request, e)
+            raise GithubException("Something went wrong")
+    except GithubException as e:
+        messages.error(request, e)
         return redirect(reverse("users:login"))
