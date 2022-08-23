@@ -20,6 +20,10 @@
    @apply w-full text-center rounded-sm py-3 font-light text-lg;
 }
 
+.btn-link {
+   @apply w-full text-center rounded-lg py-2 font-light text-lg text-white bg-red-500;
+}
+
 input {
    @apply w-full rounded-sm py-3 font-light text-lg text-left border border-gray-600 px-4;
    &:focus {
