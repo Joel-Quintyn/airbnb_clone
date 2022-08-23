@@ -10,4 +10,5 @@ urlpatterns = [
     path("logout", views.log_out, name="logout"),
     path("signup", views.SignUpView.as_view(), name="signup"),
     path("verify/<str:key>", views.email_verification, name="email-verification"),
+    path("<int:pk>", views.UserProfileDetail.as_view(), name="profile")
 ]
