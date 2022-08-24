@@ -1,7 +1,8 @@
 import os
 import requests
 from uuid import uuid4
-from django.views.generic import FormView, DetailView
+from django.contrib.auth.views import PasswordChangeView
+from django.views.generic import FormView, DetailView, UpdateView
 from django.shortcuts import render, redirect
 from django.urls import reverse, reverse_lazy
 from django.contrib.auth import authenticate, login, logout
@@ -59,8 +60,7 @@ def email_verification(request, key):
         user.save()
         messages.success(request, "Email Verified")
     except models.User.DoesNotExist:
-        messages.error(request, "User does not exist")
-        pass
+        messages.error(request, "Invalid Link")
     return redirect(reverse("core:home"))
 
 
@@ -146,3 +146,46 @@ class UserProfileDetail(DetailView):
 
     model = models.User
     context_object_name = "user_obj"
+
+
+class UpdateProfileView(UpdateView):
+
+    model = models.User
+    template_name = "users/update_user.html"
+    fields = [
+        "first_name",
+        "last_name",
+        "gender",
+        "bio",
+        "birthdate",
+        "language",
+        "currency",
+    ]
+
+    def get_object(self):
+        return self.request.user
+
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class=form_class)
+        form.fields["first_name"].widget.attrs = {"placeholder": "First name"}
+        form.fields["last_name"].widget.attrs = {"placeholder": "Last name"}
+        form.fields["bio"].widget.attrs = {"placeholder": "Bio"}
+        form.fields["birthdate"].widget.attrs = {"placeholder": "Birthdate"}
+        form.fields["first_name"].widget.attrs = {"placeholder": "First name"}
+        return form
+
+class UpdatePasswordView(PasswordChangeView):
+    
+    template_name = "users/update_password.html"
+
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class=form_class)
+        form.fields["old_password"].widget.attrs = {"placeholder": "Current Password"}
+        form.fields["new_password1"].widget.attrs = {"placeholder": "New Password"}
+        form.fields["new_password2"].widget.attrs = {
+            "placeholder": "Confirm New Password"
+        }
+        return form
+
+    def get_success_url(self):
+        return self.request.user.get_absolute_url()
