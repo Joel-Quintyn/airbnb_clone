@@ -6,9 +6,13 @@ module.exports = {
          spacing: {
             "25vh": "25vh",
             "50vh": "50vh",
-            "60vh": "60vh",
             "75vh": "75vh",
          },
+         minHeight: {
+            "50vh": "50vh",
+            "75vh": "75vh",
+         },
+         borderWidth: { 1.5: "1.5px" },
       },
    },
    plugins: [],
