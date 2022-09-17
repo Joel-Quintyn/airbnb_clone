@@ -59,6 +59,12 @@ form {
    }
 }
 
+form {
+   #id_amenities, #id_facilities, #id_house_rules {
+      @apply h-fit;
+   }
+}
+
 @keyframes messageFadeIn {
    0% {
       opacity: 0;
