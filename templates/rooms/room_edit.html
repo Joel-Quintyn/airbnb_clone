@@ -11,7 +11,7 @@
     {% include 'components/room/room_form.html' with form=form cta="Update Room" %}
 
     <div class="mt-4">
-        <a href="#" class="text-teal-500 font-medium p-2">Edit Photos</a>
+        <a href="{% url 'rooms:photos' room.pk %}" class="text-teal-500 font-medium p-2">Edit Photos</a>
     </div>
 
 </div>
