@@ -1,4 +1,4 @@
-from django.views.generic import ListView, DetailView, UpdateView, View
+from django.views.generic import ListView, DetailView, UpdateView, View, FormView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
@@ -100,8 +100,9 @@ class SearchView(View):
 
         return render(request, "rooms/search.html", {"form": form})
 
+
 class EditRoomView(user_mixins.LoggedInOnlyView, UpdateView):
-    
+
     model = models.Room
     template_name = "rooms/room_edit.html"
     fields = (
@@ -121,7 +122,7 @@ class EditRoomView(user_mixins.LoggedInOnlyView, UpdateView):
         "room_type",
         "amenities",
         "facilities",
-        "house_rules"
+        "house_rules",
     )
 
     def get_object(self, queryset=None):
@@ -129,10 +130,10 @@ class EditRoomView(user_mixins.LoggedInOnlyView, UpdateView):
         if room.host.pk != self.request.user.pk:
             raise Http404()
         return room
-    
+
 
 class RoomPhotosView(user_mixins.LoggedInOnlyView, DetailView):
-    
+
     model = models.Room
     template_name = "rooms/room_photos.html"
 
@@ -141,6 +142,7 @@ class RoomPhotosView(user_mixins.LoggedInOnlyView, DetailView):
         if room.host.pk != self.request.user.pk:
             raise Http404()
         return room
+
 
 @login_required
 def delete_photo(request, room_pk, photo_pk):
@@ -162,7 +164,7 @@ def delete_photo(request, room_pk, photo_pk):
 
 
 class EditPhotoView(user_mixins.LoggedInOnlyView, SuccessMessageMixin, UpdateView):
-    
+
     model = models.Photo
     template_name = "rooms/photo_edit.html"
     pk_url_kwarg = "photo_pk"
@@ -172,3 +174,17 @@ class EditPhotoView(user_mixins.LoggedInOnlyView, SuccessMessageMixin, UpdateVie
     def get_success_url(self):
         room_pk = self.kwargs.get("room_pk")
         return reverse("rooms:photos", kwargs={"pk": room_pk})
+
+
+class AddPhotoView(user_mixins.LoggedInOnlyView, SuccessMessageMixin, FormView):
+
+    model = models.Photo
+    template_name = "rooms/photo_create.html"
+    fields = ("caption", "file")
+    form_class = forms.CreatePhotoForm
+
+    def form_valid(self, form):
+        pk = self.kwargs.get("pk")
+        form.save(pk)
+        messages.success(self.request, "Photo Uploaded")
+        return redirect(reverse("rooms:photos", kwargs={"pk": pk}))
