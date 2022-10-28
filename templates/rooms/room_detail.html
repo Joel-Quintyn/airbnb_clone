@@ -5,20 +5,23 @@
 
 {% block content %}
 
+{% if room.first_photo %}
 <div class="max-w-full h-75vh flex mb-20 -mt-4">
    <div
       class="h-full w-1/2 bg-cover bg-centere"
       style="background-image: url({{ room.first_photo }});"
    ></div>
+
    <div class="flex flex-wrap w-1/2 h-full">
       {% for photo in room.get_next_four_photos %}
-         <div
-            class="w-1/2 bg-cover bg-center border-1.5 border-gray-600"
-            style="background-image: url({{ photo.file.url }});"
-         ></div>
+      <div
+      class="w-1/2 bg-cover bg-center border-1.5 border-gray-600"
+      style="background-image: url({{ photo.file.url }});"
+      ></div>
       {% endfor %}
    </div>
 </div>
+{% endif %}
 
 <div class="container flex mx-auto justify-around pb-56">
    <div class="w-1/2">

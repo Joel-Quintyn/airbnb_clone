@@ -134,9 +134,15 @@ class Room(core_models.TimeStampedModel):
     total_rating.short_description = "Rating"
 
     def first_photo(self):
-        (photo,) = self.photos.all()[:1]
-        return photo.file.url
+        try:
+            (photo,) = self.photos.all()[:1]
+            return photo.file.url
+        except ValueError:
+            return None
 
     def get_next_four_photos(self):
-        photos = self.photos.all()[1:5]
-        return photos
+        try:
+            photos = self.photos.all()[1:5]
+            return photos
+        except ValueError:
+            return None
